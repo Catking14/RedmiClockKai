@@ -89,16 +89,32 @@ kpackagetool6 --type Plasma/Applet --install .
 kpackagetool6 --type Plasma/Applet --upgrade .
 ```
 
+> **Note:** You may see a DBus warning: `QDBusConnection: error: could not send signal... Invalid object path: /KPackage/`. This is a harmless warning and does **not** affect installation. Look for the success message: `已成功安裝` or `Successfully installed`.
+
 **To uninstall:**
+
+Option 1 - Using kpackagetool6 (without --type flag):
 ```bash
-kpackagetool6 --type Plasma/Applet --remove org.kde.plasma.redmiclock
+kpackagetool6 --type Plasma/Applet --remove Redmi.Clock.Kai
 ```
+
+Option 2 - Direct removal (if Option 1 fails):
+```bash
+rm -rf ~/.local/share/plasma/plasmoids/Redmi.Clock.Kai/
+```
+
+Then restart Plasma to refresh the widget list:
+```bash
+plasmashell --replace &
+```
+
+> **Note:** If you see an error "KPackageStructure does not match requested format", use **Option 2** instead. This is a known issue with some KDE Plasma versions.
 
 ### Add to Desktop/Panel
 
 1. Right-click on desktop or panel
 2. Select "Add Widgets" or "Add to Panel"
-3. Search for "Redmi Clock"
+3. Search for "Redmi Clock Kai"
 4. Click and drag to desired location
 
 ## Preview & Development

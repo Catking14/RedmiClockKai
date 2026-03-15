@@ -1,4 +1,5 @@
 {
+    "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
         "Authors": [
             {
@@ -13,9 +14,6 @@
         "Icon": "clock",
         "EnabledByDefault": true,
         "License": "GPL-3.0+",
-        "ServiceTypes": [
-            "Plasma/Applet"
-        ],
         "Version": "0.1.0",
         "Website": "https://github.com/Catking14/KDE_redmi_clock_kai"
     },
