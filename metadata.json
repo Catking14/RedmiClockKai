@@ -16,8 +16,8 @@
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "0.6.4",
-        "Website": "https://store.kde.org/p/2175475/"
+        "Version": "0.1.0",
+        "Website": "https://github.com/Catking14/KDE_redmi_clock_kai"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-MainScript": "ui/main.qml"
