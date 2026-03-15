@@ -1,24 +1,36 @@
-function getNameCity(latitude, longitud, leng, callback) {
-    let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitud}&accept-language=${leng}`;
+function getNameCity(latitude, longitud, lang, callback) {
+    let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitud}&accept-language=${lang}`;
 
     let req = new XMLHttpRequest();
     req.open("GET", url, true);
+    
+    // Add User-Agent header as required by Nominatim API
+    req.setRequestHeader("User-Agent", "RedmiClockKai/0.6.4 (KDE Plasma Widget)");
 
     req.onreadystatechange = function () {
         if (req.readyState === 4) {
             if (req.status === 200) {
-                let datos = JSON.parse(req.responseText);
-                let address = datos.address;
-                let city = address.city;
-                let county = address.county;
-                let state = address.state;
-                let full = city ? city : state ? county : ""
-                console.log(full);
-                callback(full);
+                try {
+                    let datos = JSON.parse(req.responseText);
+                    let address = datos.address;
+                    // Try to get city first, then county, then state/region
+                    let cityName = address.city || address.county || address.state || address.region || "Unknown";
+                    console.log(`City name retrieved: ${cityName}`);
+                    callback(cityName);
+                } catch (e) {
+                    console.error(`JSON parse error in GetCity: ${e}`);
+                    callback("Unknown");
+                }
             } else {
-                console.error(`Error en la solicitud: ${req.status}`);
+                console.error(`Error in the city request: ${req.status}`);
+                callback("Unknown");
             }
         }
+    };
+
+    req.onerror = function() {
+        console.error("Network error in city request");
+        callback("Unknown");
     };
 
     req.send();

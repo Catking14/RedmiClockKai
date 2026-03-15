@@ -35,6 +35,13 @@ Item {
   property int currentTime: Number(Qt.formatDateTime(new Date(), "h"))
 
   property string datosweather: "0"
+  property string forecastWeather: "0"  // Initialize forecast weather data
+  property string twoMin: "0"  // Temperature minimum for tomorrow
+  property string twoMax: "0"  // Temperature maximum for tomorrow
+  property string threeMin: "0"  // Temperature minimum for day after tomorrow
+  property string threeMax: "0"  // Temperature maximum for day after tomorrow
+  property string fourMin: "0"  // Temperature minimum for 3 days later
+  property string fourMax: "0"  // Temperature maximum for 3 days later
   property bool isWeatherLoaded: false  // check the weather is loaded or not
 
 
@@ -45,11 +52,11 @@ Item {
   property string localeFullName: Qt.locale().name
   property string codeleng: {
     var fullLocale = localeFullName;
-    // Check for zh_TW specifically
+    // check for zh_TW specifically
     if (fullLocale.indexOf("TW") !== -1) {
       return "zh-tw";
     }
-    // Otherwise, return first 2 characters for language code
+    // otherwise, return first 2 characters for language code
     return fullLocale.substring(0, 2);
   }
   property string codeweather: obtener(datosweather, 4)
@@ -62,17 +69,31 @@ Item {
   property string maxweatherTomorrow: twoMax
   property string minweatherDayAftertomorrow: threeMin
   property string maxweatherDayAftertomorrow: threeMax
-  property string minweatherTwoDaysAfterTomorrow: fourMax
+  property string minweatherTwoDaysAfterTomorrow: fourMin
   property string maxweatherTwoDaysAfterTomorrow: fourMax
   property string iconWeatherCurrent: asingicon(codeweather)
 
 
 
   property string completeCoordinates: ""
-  property string latitudeIP: completeCoordinates.substring(0, (completeCoordinates.indexOf(' ')) - 1)
-  property string longitudIP: completeCoordinates.substring(completeCoordinates.indexOf(' ') + 1)
+  property string latitudeIP: {
+    // Parse latitude from "lat, lon" format (e.g., "40.7128, -74.0060")
+    var commaIndex = completeCoordinates.indexOf(',');
+    if (commaIndex !== -1) {
+      return completeCoordinates.substring(0, commaIndex).trim();
+    }
+    return "";
+  }
+  property string longitudIP: {
+    // Parse longitude from "lat, lon" format
+    var commaIndex = completeCoordinates.indexOf(',');
+    if (commaIndex !== -1) {
+      return completeCoordinates.substring(commaIndex + 1).trim();
+    }
+    return "";
+  }
 
-
+  property string city: ""  // Store the city name
 
   Component.onCompleted: {
     updateWeather(2);
@@ -89,9 +110,18 @@ Item {
   function getWeatherApi() {
     GetInfoApi.obtenerDatosClimaticos(latitude, longitud, day, currentTime, function(result) {
       datosweather = result;
-      isWeatherLoaded = true;  // mark the data is loaded
       retry.start()
     });
+  }
+
+  function getCityFunction() {
+    // Fetch city name using reverse geocoding
+    if (latitude && longitud) {
+      GetCity.getNameCity(latitude, longitud, codeleng, function(result) {
+        city = result;
+        console.log(`City name retrieved: ${result}`);
+      });
+    }
   }
 
   function asingicon(x, b) {
@@ -167,8 +197,12 @@ Item {
         }
         getWeatherApi();
       }
+      else
+      {
+        isWeatherLoaded = true;  // mark the data is loaded
+      }
       if (city === "") {
-        getCityFuncion();
+        getCityFunction();
       }
     }
   }

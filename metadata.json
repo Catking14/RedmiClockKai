@@ -7,7 +7,7 @@
             }
         ],
         "Name": "Redmi Clock Kai",
-        "Id": "Redmi.Clock Kai",
+        "Id": "Redmi.Clock.Kai",
         "Description": "A clock having simplified look like redmi phone widget",
         "Category": "Utilities",
         "Icon": "clock",

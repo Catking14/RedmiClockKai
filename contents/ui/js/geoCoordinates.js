@@ -7,16 +7,35 @@ function obtenerCoordenadas(callback) {
     req.onreadystatechange = function () {
         if (req.readyState === 4) {
             if (req.status === 200) {
-                let datos = JSON.parse(req.responseText);
-                let latitud = datos.lat
-                let longitud = datos.lon
-                let full = latitud + ", " + longitud
-                console.log(`${full}`)
-                callback(full);
+                try {
+                    let datos = JSON.parse(req.responseText);
+                    let latitud = datos.lat;
+                    let longitud = datos.lon;
+                    
+                    // Validate coordinates are numbers
+                    if (typeof latitud !== 'number' || typeof longitud !== 'number') {
+                        console.error("Invalid coordinate types from API");
+                        callback("0, 0");
+                        return;
+                    }
+                    
+                    let full = latitud + ", " + longitud;
+                    console.log(`Coordinates retrieved: ${full}`);
+                    callback(full);
+                } catch (e) {
+                    console.error(`JSON parse error in geoCoordinates: ${e}`);
+                    callback("0, 0");
+                }
             } else {
-                console.error(`Error en la solicitud: ${req.status}`);
+                console.error(`Error in the applet: ${req.status}`);
+                callback("0, 0");
             }
         }
+    };
+
+    req.onerror = function() {
+        console.error("Network error in geoCoordinates request");
+        callback("0, 0");
     };
 
     req.send();

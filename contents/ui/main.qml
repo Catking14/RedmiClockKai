@@ -131,6 +131,18 @@ PlasmoidItem {
                 color: colorPlasmoid
                 opacity: weatherData.isWeatherLoaded ? 1 : 0.3  // lower the opacity if data is not loaded
             }
+
+            Text {
+                id: cityText
+                anchors.bottom: parent.bottom
+                width: parent.height*.55
+                height: width
+                font.family: quicksand.name
+                font.pixelSize: height*.3
+                text: weatherData.city ? weatherData.city : ""
+                color: colorPlasmoid
+                elide: Text.ElideRight
+            }
         }
 
     }
