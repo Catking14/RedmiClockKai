@@ -265,17 +265,18 @@ Contributions welcome! Areas for improvement:
 
 ## License
 
-GPL-3.0+ - See LICENSE file for details
+GPL-3.0-or-later - See LICENSE file for details
 
 ## Author
 
 - **Original:** zayronxio
 - **Maintainer:** catking14
-- **Repository:** https://store.kde.org/p/2175475/
+- **Upstream:** https://store.kde.org/p/2175475/
+- **Fork Repository:** https://github.com/Catking14/RedmiClockKai
 
 ## Changelog
 
-### v0.6.4
+### v0.1.0
 - Added Traditional Chinese (繁體中文) support
 - Improved coordinate parsing with comma separation
 - Enhanced error handling for all API calls

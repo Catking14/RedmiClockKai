@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 function getNameCity(latitude, longitud, lang, callback) {
     let url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitud}&accept-language=${lang}`;
 
@@ -15,21 +19,21 @@ function getNameCity(latitude, longitud, lang, callback) {
                     let address = datos.address;
                     // Try to get city first, then county, then state/region
                     let cityName = address.city || address.county || address.state || address.region || "Unknown";
-                    console.log(`City name retrieved: ${cityName}`);
+                    console.log(`[RedmiClockKai] City name retrieved: ${cityName}`);
                     callback(cityName);
                 } catch (e) {
-                    console.error(`JSON parse error in GetCity: ${e}`);
+                    console.error(`[RedmiClockKai] JSON parse error in GetCity: ${e}`);
                     callback("Unknown");
                 }
             } else {
-                console.error(`Error in the city request: ${req.status}`);
+                console.error(`[RedmiClockKai] Error in the city request: ${req.status}`);
                 callback("Unknown");
             }
         }
     };
 
     req.onerror = function() {
-        console.error("Network error in city request");
+        console.error("[RedmiClockKai] Network error in city request");
         callback("Unknown");
     };
 

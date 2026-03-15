@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 function weatherShortText(languageCode, code) {
     let descriptions = {
         en: {

@@ -3,6 +3,9 @@
     "KPlugin": {
         "Authors": [
             {
+                "Name": "zayronxio"
+            },
+            {
                 "Email": "edarhinos9@gmail.com",
                 "Name": "Catking14"
             }
@@ -13,9 +16,12 @@
         "Category": "Utilities",
         "Icon": "clock",
         "EnabledByDefault": true,
-        "License": "GPL-3.0+",
+        "License": "GPL-3.0-or-later",
+        "ServiceTypes": [
+            "Plasma/Applet"
+        ],
         "Version": "0.1.0",
-        "Website": "https://github.com/Catking14/KDE_redmi_clock_kai"
+        "Website": "https://github.com/Catking14/RedmiClockKai"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-MainScript": "ui/main.qml"

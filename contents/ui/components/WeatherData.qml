@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import "../js/traductor.js" as Traduc
@@ -119,7 +123,6 @@ Item {
     if (latitude && longitud) {
       GetCity.getNameCity(latitude, longitud, codeleng, function(result) {
         city = result;
-        console.log(`City name retrieved: ${result}`);
       });
     }
   }

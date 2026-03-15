@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 function GetForecastWeather(latitud, longitud, fechaInicio, fechaFin, callback) {
      let url = `https://api.open-meteo.com/v1/forecast?latitude=${latitud}&longitude=${longitud}&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&start_date=${fechaInicio}&end_date=${fechaFin}`;
 
@@ -15,10 +19,10 @@ function GetForecastWeather(latitud, longitud, fechaInicio, fechaFin, callback) 
                  let min = daily.temperature_2m_min.join(' ');
 
                  let full = codes + " " + max + " " + min
-                 console.log(`${full}`);
+                 console.log(`[RedmiClockKai] ${full}`);
                  callback(full);
              } else {
-                 console.error(`Error en la solicitud: ${req.status}`);
+                 console.error(`[RedmiClockKai] Error in the applet: ${req.status}`);
              }
          }
      };

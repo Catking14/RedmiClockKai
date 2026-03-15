@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 function getBtDevice() {
     var connectedDevices = [];
 
@@ -40,7 +44,7 @@ function checkInhibition() {
     if (!NotificationManager.Server.valid) {
         return false;
     }
-    console.log("pass")
+    console.log("[RedmiClockKai] pass")
     var inhibitedUntil = notificationSettings.notificationsInhibitedUntil;
     if (!isNaN(inhibitedUntil.getTime())) {
         inhibited |= (Date.now() < inhibitedUntil.getTime());
@@ -119,7 +123,7 @@ function changeVolumeByPercent(volumeObject, deltaPercent) {
     return newPercent;
 }
 function volIconName(volume, muted, prefix) {
-    console.log(volume, muted, prefix)
+    console.log("[RedmiClockKai]", volume, muted, prefix)
     if (!prefix) {
         prefix = "audio-volume";
     }
@@ -140,6 +144,6 @@ function sumarDia(a) {
         var fechaActual = new Date();
         fechaActual.setDate(fechaActual.getDate() + a);
         var fechaFormateada = Qt.formatDateTime(fechaActual, "dddd");
-        console.log("Fecha con un día añadido:", fechaFormateada);
+        console.log("[RedmiClockKai] Fecha con un día añadido:", fechaFormateada);
         return fechaFormateada
     }

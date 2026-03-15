@@ -1,7 +1,11 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 function obtenerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback) {
      // Ensure latitude and longitude are valid numbers
     if (!latitud || !longitud || isNaN(parseFloat(latitud)) || isNaN(parseFloat(longitud))) {
-        console.error("Invalid latitude or longitude provided");
+        console.error("[RedmiClockKai] Invalid latitude or longitude provided for RedmiClockKai");
         callback("failed 0");
         return;
      }
@@ -11,7 +15,7 @@ function obtenerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback)
      let req = new XMLHttpRequest();
      req.open("GET", url, true);
 
-     console.error(`Fetching weather data for ${latitud}, ${longitud}`);
+     console.warn(`[RedmiClockKai] Fetching weather data for ${latitud}, ${longitud}`);
 
      req.onreadystatechange = function () {
          if (req.readyState === 4) {
@@ -34,21 +38,21 @@ function obtenerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback)
                      let tempMax = datosDiarios.temperature_2m_max[0];
 
                      let full = temperaturaActual + " " + tempMin + " " + tempMax + " " + codeCurrentWeather + " " + propabilityPrecipitationCurrent + " " + windSpeed + " " + propabilityUVindex;
-                     console.log(`Weather data retrieved: ${full}`);
+                     console.warn(`[RedmiClockKai] Weather data retrieved: ${full}`);
                      callback(full);
                  } catch (e) {
-                     console.error(`JSON parse error: ${e}`);
+                     console.error(`[RedmiClockKai] JSON parse error: ${e}`);
                      callback("failed 0");
                  }
              } else {
-                 console.error(`Error in the applet: ${req.status}`);
+                 console.error(`[RedmiClockKai] Error in the applet: ${req.status}`);
                  callback("failed 0");
              }
          }
      };
 
      req.onerror = function() {
-         console.error("Network error occurred");
+         console.error("[RedmiClockKai] Network error occurred.");
          callback("failed 0");
      };
 

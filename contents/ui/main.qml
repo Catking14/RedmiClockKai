@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 import QtQuick
 import QtQuick.Controls
 import org.kde.plasma.plasmoid
@@ -120,6 +124,20 @@ PlasmoidItem {
                     color: colorPlasmoid
                     opacity: weatherData.isWeatherLoaded ? 1 : 0.3  // lower the opacity if data is not loaded
                 }
+
+                Text {
+                    id: tempUnitText
+                    anchors.right: parent.right
+                    anchors.leftMargin: firsText.height*.3
+                    anchors.verticalCenter: parent.bottom
+                    width: parent.height*.3
+                    height: parent.height
+                    font.family: quicksand.name
+                    font.pixelSize: height*.3
+                    text: weatherData.isWeatherLoaded ? (weatherData.temperatureUnit == 0 ? "C" : "F") : ""
+                    color: colorPlasmoid
+                    opacity: 0
+                }
             }
 
             Kirigami.Icon {
@@ -139,7 +157,7 @@ PlasmoidItem {
                 height: width
                 font.family: quicksand.name
                 font.pixelSize: height*.3
-                text: weatherData.city ? weatherData.city : ""
+                text: (weatherData.city && weatherData.isWeatherLoaded) ? weatherData.city : ""
                 color: colorPlasmoid
                 elide: Text.ElideRight
             }

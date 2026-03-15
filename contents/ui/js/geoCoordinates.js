@@ -1,3 +1,7 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// Forked from work by zayronxio (https://store.kde.org/p/2175475/)
+// Modifications Copyright (C) 2026 Catking14
+
 function obtenerCoordenadas(callback) {
     let url = "http://ip-api.com/json/?fields=lat,lon";
 
@@ -14,27 +18,27 @@ function obtenerCoordenadas(callback) {
                     
                     // Validate coordinates are numbers
                     if (typeof latitud !== 'number' || typeof longitud !== 'number') {
-                        console.error("Invalid coordinate types from API");
+                        console.error("[RedmiClockKai] Invalid coordinate types from API");
                         callback("0, 0");
                         return;
                     }
                     
                     let full = latitud + ", " + longitud;
-                    console.log(`Coordinates retrieved: ${full}`);
+                    console.log(`[RedmiClockKai] Coordinates retrieved: ${full}`);
                     callback(full);
                 } catch (e) {
-                    console.error(`JSON parse error in geoCoordinates: ${e}`);
+                    console.error(`[RedmiClockKai] JSON parse error in geoCoordinates: ${e}`);
                     callback("0, 0");
                 }
             } else {
-                console.error(`Error in the applet: ${req.status}`);
+                console.error(`[RedmiClockKai] Error in the applet: ${req.status}`);
                 callback("0, 0");
             }
         }
     };
 
     req.onerror = function() {
-        console.error("Network error in geoCoordinates request");
+        console.error("[RedmiClockKai] Network error in geoCoordinates request");
         callback("0, 0");
     };
 
