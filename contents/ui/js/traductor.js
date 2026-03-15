@@ -363,6 +363,34 @@ function weatherShortText(languageCode, code) {
             95: "Tempesta",
             96: "Tempesta",
             99: "Tempesta"
+        },
+        "zh-tw": {
+            0: "晴朗",
+            1: "晴朗",
+            2: "多雲",
+            3: "多雲",
+            51: "小雨",
+            53: "小雨",
+            55: "小雨",
+            56: "小雨",
+            57: "小雨",
+            61: "雨",
+            63: "雨",
+            65: "雨",
+            66: "雨",
+            67: "雨",
+            71: "雪",
+            73: "雪",
+            75: "雪",
+            77: "冰雹",
+            80: "陣雨",
+            81: "陣雨",
+            82: "陣雨",
+            85: "陣雨",
+            86: "陣雨",
+            95: "暴風",
+            96: "暴風",
+            99: "暴風"
         }
     };
 
@@ -655,7 +683,35 @@ function weatherLongText(languageCode, code) {
             96: "약한 우박을 동반한 천둥 번개",
             99: "강한 우박을 동반한 천둥 번개"
         },
-        // Agrega más idiomas aquí según sea necesario
+        "zh-tw": {
+            0: "晴朗",
+            1: "大部分晴朗",
+            2: "局部多雲",
+            3: "陰天",
+            51: "弱霧雨",
+            53: "中等霧雨",
+            55: "濃霧雨",
+            56: "弱冰霧雨",
+            57: "濃冰霧雨",
+            61: "弱雨",
+            63: "中等雨",
+            65: "強雨",
+            66: "弱凍雨",
+            67: "強凍雨",
+            71: "弱降雪",
+            73: "中等降雪",
+            75: "強降雪",
+            77: "雪粒",
+            80: "弱陣雨",
+            81: "中等陣雨",
+            82: "強陣雨",
+            85: "弱陣雪",
+            86: "強陣雪",
+            95: "雷暴",
+            96: "雷暴伴有小冰雹",
+            99: "雷暴伴有大冰雹"
+        },
+        // Add more languages here as needed
     };
 
     if (descriptions[languageCode]) {
@@ -675,6 +731,7 @@ function rainProbabilityText(languageCode) {
         "pt": "Probabilidade de chuva",   // Portuguese
         "ru": "Вероятность дождя",               // Russian
         "zh": "降雨概率",                // Chinese (Mandarin)
+        "zh-tw": "降雨機率",              // Chinese (Traditional)
         "ja": "降雨確率",         // Japanese
         "ko": "비 올 확률",            // Korean
         "nl": "Regenkans",          // Dutch
@@ -777,6 +834,13 @@ function lavelUV(languageCode, lavel) {
             2: "Wapamwamba",
             3: "Wapamwamba Kwambiri",
             4: "Mowopsa"
+        },
+        "zh-tw": {
+            0: "低",
+            1: "中等",
+            2: "高",
+            3: "很高",
+            4: "極高"
         }
     };
 
@@ -799,6 +863,7 @@ function windSpeedText(languageCode) {
         "pt": "Velocidade do vento",
         "ru": "Скорость ветра",
         "zh": "风速",
+        "zh-tw": "風速",
         "ja": "風速",
         "ko": "풍속",
         "nl": "Windsnelheid",
@@ -815,6 +880,7 @@ function windSpeedText(languageCode) {
         "pt": "Vento",
         "ru": "Ветер",
         "zh": "风",
+        "zh-tw": "風",
         "ja": "風",
         "ko": "바람",
         "nl": "Wind",
@@ -843,6 +909,7 @@ function uvRadiationText(languageCode) {
         "pt": "UV",
         "ru": "УФ-излучение",
         "zh": "紫外线辐射",
+        "zh-tw": "紫外線輻射",
         "ja": "UV",
         "ko": "자외선 방사",
         "nl": "UV",

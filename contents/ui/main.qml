@@ -61,12 +61,12 @@ PlasmoidItem {
                 width: dayOfMont.implicitWidth + separ.implicitWidth + mont.implicitWidth
                 height: firsText.height
                 Text {
-                    id: dayOfMont
-                    width: date.width - separ.implicitWidth - mont.implicitWidth
+                    id: mont
+                    width: date.width - dayOfMont.implicitWidth - separ.implicitWidth
                     height: parent.height
                     font.family: quicksand.name
                     font.pixelSize: height*.8
-                    text: Qt.formatDateTime(new Date(), "dd");
+                    text:  eliminteZero(Qt.formatDateTime(new Date(), "MM"))
                     color: colorPlasmoid
                 }
                 Text {
@@ -80,12 +80,12 @@ PlasmoidItem {
                     opacity: 0.5
                 }
                 Text {
-                    id: mont
-                    width: date.width - dayOfMont.implicitWidth - separ.implicitWidth
+                    id: dayOfMont
+                    width: date.width - separ.implicitWidth - mont.implicitWidth
                     height: parent.height
                     font.family: quicksand.name
                     font.pixelSize: height*.8
-                    text:  eliminteZero(Qt.formatDateTime(new Date(), "MM"))
+                    text: Qt.formatDateTime(new Date(), "dd");
                     color: colorPlasmoid
                 }
             }
@@ -99,7 +99,7 @@ PlasmoidItem {
                 text: getDate("d").substring(0,3)
                 topPadding : height*.14
                 color: colorPlasmoid
-                opacity: 0.5
+                opacity: 0.8
             }
         }
         Row {
@@ -116,8 +116,9 @@ PlasmoidItem {
                     height: parent.height
                     font.family: quicksand.name
                     font.pixelSize: firsText.height*.8
-                    text: Math.round(weatherData.temperaturaActual) + "° "
+                    text: weatherData.isWeatherLoaded ? (Math.round(weatherData.temperaturaActual) + "° ") : "-- "
                     color: colorPlasmoid
+                    opacity: weatherData.isWeatherLoaded ? 1 : 0.3  // lower the opacity if data is not loaded
                 }
             }
 
@@ -128,6 +129,7 @@ PlasmoidItem {
                 width: parent.height*.55
                 height: width
                 color: colorPlasmoid
+                opacity: weatherData.isWeatherLoaded ? 1 : 0.3  // lower the opacity if data is not loaded
             }
         }
 

@@ -2,13 +2,13 @@
     "KPlugin": {
         "Authors": [
             {
-                "Email": "adolfo@librepixels.com",
-                "Name": "zayronxio"
+                "Email": "edarhinos9@gmail.com",
+                "Name": "Catking14"
             }
         ],
-        "Name": "Redmi Clock",
-        "Id": "Redmi.Clock",
-        "Description": "clock",
+        "Name": "Redmi Clock Kai",
+        "Id": "Redmi.Clock Kai",
+        "Description": "A clock having simplified look like redmi phone widget",
         "Category": "Utilities",
         "Icon": "clock",
         "EnabledByDefault": true,

@@ -7,11 +7,11 @@ import "../js/GetCity.js" as GetCity
 import "../js/GetModelWeather.js" as GetModelWeather
 
 Item {
-  signal dataChanged // Definir el signal aquí
+  signal dataChanged // Define the signal here
 
   function obtener(texto, indice) {
-    var palabras = texto.split(/\s+/); // Divide el texto en palabras utilizando el espacio como separador
-    return palabras[indice - 1]; // El índice - 1 porque los índices comienzan desde 0 en JavaScript
+    var palabras = texto.split(/\s+/); // Split the text into words using whitespace as separator
+    return palabras[indice - 1]; // Index - 1 because indices start from 0 in JavaScript
   }
 
   function fahrenheit(temp) {
@@ -35,13 +35,23 @@ Item {
   property int currentTime: Number(Qt.formatDateTime(new Date(), "h"))
 
   property string datosweather: "0"
+  property bool isWeatherLoaded: false  // check the weather is loaded or not
 
 
   property string day: (Qt.formatDateTime(new Date(), "yyyy-MM-dd"))
   property string therday: Qt.formatDateTime(new Date(new Date().getTime() + (numberOfDays * 24 * 60 * 60 * 1000)), "yyyy-MM-dd")
   property int numberOfDays: 6
   property string temperaturaActual: fahrenheit(obtener(datosweather, 1))
-  property string codeleng: ((Qt.locale().name)[0] + (Qt.locale().name)[1])
+  property string localeFullName: Qt.locale().name
+  property string codeleng: {
+    var fullLocale = localeFullName;
+    // Check for zh_TW specifically
+    if (fullLocale.indexOf("TW") !== -1) {
+      return "zh-tw";
+    }
+    // Otherwise, return first 2 characters for language code
+    return fullLocale.substring(0, 2);
+  }
   property string codeweather: obtener(datosweather, 4)
   property string codeweatherTomorrow: obtener(forecastWeather, 2)
   property string codeweatherDayAftertomorrow: obtener(forecastWeather, 3)
@@ -79,6 +89,7 @@ Item {
   function getWeatherApi() {
     GetInfoApi.obtenerDatosClimaticos(latitude, longitud, day, currentTime, function(result) {
       datosweather = result;
+      isWeatherLoaded = true;  // mark the data is loaded
       retry.start()
     });
   }
@@ -167,9 +178,9 @@ Item {
   }
 
   function checkDataReady() {
-    // Verificar si forecastWeather y datosweather están disponibles
+    // Check if forecastWeather and datosweather are available
     if (forecastWeather !== "0" && datosweather !== "0") {
-      dataChanged(); // Emitir el signal dataChanged cuando los datos estén listos
+      dataChanged(); // Emit the dataChanged signal when data is ready
     }
   }
 
