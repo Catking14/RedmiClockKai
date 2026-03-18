@@ -120,7 +120,7 @@ PlasmoidItem {
                     height: parent.height
                     font.family: quicksand.name
                     font.pixelSize: firsText.height*.8
-                    text: weatherData.isWeatherLoaded ? (Math.round(weatherData.temperaturaActual) + "° ") : "-- "
+                    text: weatherData.isWeatherLoaded ? (Math.round(weatherData.temperatureActual) + "° ") : "-- "
                     color: colorPlasmoid
                     opacity: weatherData.isWeatherLoaded ? 1 : 0.3  // lower the opacity if data is not loaded
                 }
@@ -136,7 +136,7 @@ PlasmoidItem {
                     font.pixelSize: height*.3
                     text: weatherData.isWeatherLoaded ? (weatherData.temperatureUnit == 0 ? "C" : "F") : ""
                     color: colorPlasmoid
-                    opacity: 0
+                    opacity: 0  // currently disabled
                 }
             }
 

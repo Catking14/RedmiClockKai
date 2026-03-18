@@ -18,23 +18,23 @@ function getNameCity(latitude, longitud, lang, callback) {
                     let datos = JSON.parse(req.responseText);
                     let address = datos.address;
                     // Try to get city first, then county, then state/region
-                    let cityName = address.city || address.county || address.state || address.region || "Unknown";
+                    let cityName = address.city || address.county || address.state || address.region || "";
                     console.log(`[RedmiClockKai] City name retrieved: ${cityName}`);
                     callback(cityName);
                 } catch (e) {
                     console.error(`[RedmiClockKai] JSON parse error in GetCity: ${e}`);
-                    callback("Unknown");
+                    callback("");
                 }
             } else {
                 console.error(`[RedmiClockKai] Error in the city request: ${req.status}`);
-                callback("Unknown");
+                callback("");
             }
         }
     };
 
     req.onerror = function() {
         console.error("[RedmiClockKai] Network error in city request");
-        callback("Unknown");
+        callback("");
     };
 
     req.send();

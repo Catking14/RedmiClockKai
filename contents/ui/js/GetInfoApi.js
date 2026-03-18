@@ -2,7 +2,7 @@
 // Forked from work by zayronxio (https://store.kde.org/p/2175475/)
 // Modifications Copyright (C) 2026 Catking14
 
-function obtenerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback) {
+function obtainerDatosClimaticos(latitud, longitud, fechaInicio, hours, callback) {
      // Ensure latitude and longitude are valid numbers
     if (!latitud || !longitud || isNaN(parseFloat(latitud)) || isNaN(parseFloat(longitud))) {
         console.error("[RedmiClockKai] Invalid latitude or longitude provided for RedmiClockKai");

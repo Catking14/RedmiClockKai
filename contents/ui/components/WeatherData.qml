@@ -13,9 +13,13 @@ import "../js/GetModelWeather.js" as GetModelWeather
 Item {
   signal dataChanged // Define the signal here
 
-  function obtener(texto, indice) {
-    var palabras = texto.split(/\s+/); // Split the text into words using whitespace as separator
-    return palabras[indice - 1]; // Index - 1 because indices start from 0 in JavaScript
+  function obtainer(text, indice) {
+    var word = text.split(/\s+/); // Split the text into words using whitespace as separator
+    if (word[indice - 1]) { // Index - 1 because indices start from 0 in JavaScript
+      return word[indice - 1];
+    } else {
+      return "0";
+    }
   }
 
   function fahrenheit(temp) {
@@ -38,7 +42,7 @@ Item {
 
   property int currentTime: Number(Qt.formatDateTime(new Date(), "h"))
 
-  property string datosweather: "0"
+  property string dataweather: "0"
   property string forecastWeather: "0"  // Initialize forecast weather data
   property string twoMin: "0"  // Temperature minimum for tomorrow
   property string twoMax: "0"  // Temperature maximum for tomorrow
@@ -52,7 +56,7 @@ Item {
   property string day: (Qt.formatDateTime(new Date(), "yyyy-MM-dd"))
   property string therday: Qt.formatDateTime(new Date(new Date().getTime() + (numberOfDays * 24 * 60 * 60 * 1000)), "yyyy-MM-dd")
   property int numberOfDays: 6
-  property string temperaturaActual: fahrenheit(obtener(datosweather, 1))
+  property string temperatureActual: fahrenheit(obtainer(dataweather, 1))
   property string localeFullName: Qt.locale().name
   property string codeleng: {
     var fullLocale = localeFullName;
@@ -63,12 +67,12 @@ Item {
     // otherwise, return first 2 characters for language code
     return fullLocale.substring(0, 2);
   }
-  property string codeweather: obtener(datosweather, 4)
-  property string codeweatherTomorrow: obtener(forecastWeather, 2)
-  property string codeweatherDayAftertomorrow: obtener(forecastWeather, 3)
-  property string codeweatherTwoDaysAfterTomorrow: obtener(forecastWeather, 4)
-  property string minweatherCurrent: fahrenheit(obtener(datosweather, 2))
-  property string maxweatherCurrent: fahrenheit(obtener(datosweather, 3))
+  property string codeweather: obtainer(dataweather, 4)
+  property string codeweatherTomorrow: obtainer(forecastWeather, 2)
+  property string codeweatherDayAftertomorrow: obtainer(forecastWeather, 3)
+  property string codeweatherTwoDaysAfterTomorrow: obtainer(forecastWeather, 4)
+  property string minweatherCurrent: fahrenheit(obtainer(dataweather, 2))
+  property string maxweatherCurrent: fahrenheit(obtainer(dataweather, 3))
   property string minweatherTomorrow: twoMin
   property string maxweatherTomorrow: twoMax
   property string minweatherDayAftertomorrow: threeMin
@@ -104,17 +108,21 @@ Item {
   }
 
 
-  function getCoordinatesWithIp() {
-    GeoCoordinates.obtenerCoordenadas(function(result) {
+  function getCoordinatesWithIp(callback) {
+    GeoCoordinates.obtainerCoordinates(function(result) {
       completeCoordinates = result;
+      if (callback) callback();   // trigger callback after result is returned
     });
   }
 
 
   function getWeatherApi() {
-    GetInfoApi.obtenerDatosClimaticos(latitude, longitud, day, currentTime, function(result) {
-      datosweather = result;
-      retry.start()
+    GetInfoApi.obtainerDatosClimaticos(latitude, longitud, day, currentTime, function(result) {
+      if (result === "failed 0")  retry.start()
+      else {
+        dataweather = result;
+        isWeatherLoaded = true;  // mark the data is loaded
+      }
     });
   }
 
@@ -178,14 +186,19 @@ Item {
   function updateWeather(x) {
     if (x === 2) {
       if (useCoordinatesIp === "true") {
-        getCoordinatesWithIp();
+        getCoordinatesWithIp(function () {
+            getWeatherApi();
+            getCityFunction();
+          });
       } else {
         if (latitudeC === "0" || longitudC === "0") {
-          getCoordinatesWithIp();
+          getCoordinatesWithIp(function () {
+            getWeatherApi();
+            getCityFunction();
+          });
         }
       }
     }
-    getWeatherApi();
   }
 
   Timer {
@@ -194,29 +207,22 @@ Item {
     running: false
     repeat: false
     onTriggered: {
-      if (datosweather === "failed 0") {
-        if (latitudeC === "0" || longitudC === "0") {
-          getCoordinatesWithIp();
-        }
-        getWeatherApi();
-      }
-      else
-      {
-        isWeatherLoaded = true;  // mark the data is loaded
-      }
-      if (city === "") {
-        getCityFunction();
+      if (latitudeC === "0" || longitudC === "0") {
+        getCoordinatesWithIp(function () {
+          getWeatherApi();
+          getCityFunction();
+        });
       }
     }
   }
 
-  onDatosweatherChanged: {
+  onDataweatherChanged: {
     checkDataReady()
   }
 
   function checkDataReady() {
-    // Check if forecastWeather and datosweather are available
-    if (forecastWeather !== "0" && datosweather !== "0") {
+    // Check if forecastWeather and dataweather are available
+    if (forecastWeather !== "0" && dataweather !== "0") {
       dataChanged(); // Emit the dataChanged signal when data is ready
     }
   }
@@ -230,9 +236,5 @@ Item {
       updateWeather(1);
     }
   }
-
-
-
-  onObserverCoordenatesChanged: updateWeather(2)
 }
 

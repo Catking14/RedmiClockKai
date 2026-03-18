@@ -2,7 +2,7 @@
 // Forked from work by zayronxio (https://store.kde.org/p/2175475/)
 // Modifications Copyright (C) 2026 Catking14
 
-function obtenerCoordenadas(callback) {
+function obtainerCoordinates(callback) {
     let url = "http://ip-api.com/json/?fields=lat,lon";
 
     let req = new XMLHttpRequest();
