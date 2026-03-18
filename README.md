@@ -276,6 +276,12 @@ GPL-3.0-or-later - See LICENSE file for details
 
 ## Changelog
 
+### v0.1.1
+- Fix async API caused data undefined error
+- Fix looped `onChanged` API calls
+- Fix showing "Unknown" as city name when data not retrieved
+- Renamed some spanish variables and functions
+
 ### v0.1.0
 - Added Traditional Chinese (繁體中文) support
 - Improved coordinate parsing with comma separation

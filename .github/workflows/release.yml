@@ -1,0 +1,50 @@
+name: Publish Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    
+    # These permissions are required for the workflow to create a release on your behalf
+    permissions:
+      contents: write 
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version number
+        id: get_version
+        run: |
+          # GITHUB_REF looks like "refs/tags/v0.1.1". This strips the "refs/tags/v" part to leave just "0.1.1".
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Clean up files before packing
+        run: |
+          # Remove the .github directory as requested
+          rm -rf .github
+          
+          # Remove the .git history folder so it doesn't bulk up your release file
+          rm -rf .git
+
+      - name: Pack the files
+        run: |
+          # Compress everything in the current directory into the named tarball
+          # We create the file in the parent directory (../) first so it doesn't accidentally pack itself!
+          tar -czvf ../RedmiClockKai-${{ env.VERSION }}.tar.gz .
+          
+          # Move it back to the current directory for the upload step
+          mv ../RedmiClockKai-${{ env.VERSION }}.tar.gz .
+
+      - name: Create GitHub Release and Upload Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: RedmiClockKai-${{ env.VERSION }}.tar.gz
+          name: Release ${{ github.ref_name }} # Automatically names the release "Release v0.1.1"
+          generate_release_notes: true # Automatically generates release notes based on your PRs/commits

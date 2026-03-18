@@ -20,7 +20,7 @@
         "ServiceTypes": [
             "Plasma/Applet"
         ],
-        "Version": "0.1.0",
+        "Version": "0.1.1",
         "Website": "https://github.com/Catking14/RedmiClockKai"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
